@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="신민석 — 자기소개서" />
+  <!-- Classic Serif 폰트 시스템: Playfair Display / Noto Serif KR -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+  <title>신민석 · 자기소개서</title>
+  <style>
+    /* ===============================
+       0) CSS 리셋(필수 최소한)
+    =============================== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html {
+      font-size: 18px; /* 타이포 기본 크기 18px */
+    }
+    body {
+      margin: 0;
+      font-family: "Noto Serif KR", "Playfair Display", Georgia, serif;
+      line-height: 1.45; /* 1.4~1.5 권장값 */
+      color: #0f172a;
+      background: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+    :root{
+      /* Bootstrap Style 그리드 시스템 및 디자인 토큰 */
+      --container-max: 1140px; /* 컨테이너 max-width */
+      --gutter: 30px;          /* 1.875rem 과 동일 */
+      --col-gap: 30px;
+
+      /* 색상 토큰 (Minimal Flat / Rounded Soft 공용) */
+      --border: #e2e8f0;
+      --flat-hover: #f8fafc;
+      --soft-shadow: 0 4px 6px rgba(0,0,0,0.1);
+
+      /* 타이포 스케일(1.2 배율) */
+      --fs-300: 0.833rem;  /* ~15px */
+      --fs-400: 1rem;      /* 18px */
+      --fs-500: 1.2rem;    /* 21.6px */
+      --fs-600: 1.44rem;   /* 26px */
+      --fs-700: 1.728rem;  /* 31px */
+      --fs-800: 2.074rem;  /* 37px */
+    }
+
+    /* ===============================
+       1) 레이아웃: 컨테이너 & 12컬럼 그리드 (모바일 퍼스트)
+    =============================== */
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin-inline: auto;
+      padding-inline: 15px; /* 좌우 여백 */
+    }
+    .row {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0,1fr)); /* 12컬럼 */
+      gap: var(--col-gap);
+    }
+    /* 기본은 단일컬럼 → 브레이크포인트마다 확장 */
+    [class^="col-"] { grid-column: 1 / -1; }
+
+    /* Breakpoints: sm(576), md(768), lg(992), xl(1200) */
+    @media (min-width: 576px) {
+      .col-sm-6 { grid-column: span 6; }
+      .col-sm-4 { grid-column: span 4; }
+      .col-sm-3 { grid-column: span 3; }
+      .col-sm-8 { grid-column: span 8; }
+    }
+    @media (min-width: 768px) {
+      .col-md-6 { grid-column: span 6; }
+      .col-md-4 { grid-column: span 4; }
+      .col-md-3 { grid-column: span 3; }
+      .col-md-8 { grid-column: span 8; }
+    }
+    @media (min-width: 992px) {
+      .col-lg-6 { grid-column: span 6; }
+      .col-lg-4 { grid-column: span 4; }
+      .col-lg-3 { grid-column: span 3; }
+      .col-lg-8 { grid-column: span 8; }
+    }
+    @media (min-width: 1200px) {
+      .col-xl-6 { grid-column: span 6; }
+      .col-xl-4 { grid-column: span 4; }
+      .col-xl-3 { grid-column: span 3; }
+      .col-xl-8 { grid-column: span 8; }
+    }
+
+    /* ===============================
+       2) 헤더 & 네비게이션 (Smooth Slide / 햄버거, CSS-only)
+    =============================== */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: saturate(120%) blur(6px);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .brand {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: var(--fs-700);
+      letter-spacing: 0.2px;
+    }
+    /* 햄버거 버튼 */
+    #nav-toggle { position: absolute; left: -9999px; }
+    .burger {
+      display: inline-flex; gap: 8px; align-items: center;
+      border: 1px solid var(--border);
+      padding: 8px 12px; border-radius: 12px;
+      transition: background 0.2s ease;
+      cursor: pointer;
+    }
+    .burger:hover { background: var(--flat-hover); }
+    .menu {
+      position: fixed; inset: 0 30% 0 0; /* 좌측 슬라이드 패널 */
+      background: #fff;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+      border-right: 1px solid var(--border);
+      padding: 24px;
+    }
+    .menu a {
+      display: block;
+      padding: 12px 8px;
+      border-radius: 8px;
+      transition: background 0.2s ease;
+    }
+    .menu a:hover { background: var(--flat-hover); }
+    /* 체크되면 슬라이드 인 */
+    #nav-toggle:checked ~ .menu { transform: translateX(0); }
+
+    /* 데스크톱에서는 상단 고정 메뉴로 */
+    @media (min-width: 992px) {
+      .burger { display: none; }
+      .menu {
+        position: static; inset: auto;
+        transform: none; transition: none;
+        border: 0; padding: 0;
+        display: flex; gap: 8px; background: transparent;
+      }
+      .menu a { padding: 8px 10px; }
+    }
+
+    /* ===============================
+       3) 히어로 (Classic Serif / Minimal Flat)
+    =============================== */
+    .hero {
+      padding: 56px 0 32px;
+    }
+    .eyebrow {
+      font-size: var(--fs-300);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #334155;
+    }
+    h1 {
+      margin: 8px 0 16px;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(2rem, 4vw, 2.6rem); /* 1.2 스케일 반영 */
+      line-height: 1.2;
+    }
+    .lead {
+      font-size: var(--fs-500);
+      color: #334155;
+      max-width: 60ch;
+    }
+
+    /* ===============================
+       4) 카드 컴포넌트
+          - minimal-flat: 테두리 1px, 그림자 없음
+          - rounded-soft: radius 12px, 부드러운 그림자, scale hover
+    =============================== */
+    .card {
+      display: flex; flex-direction: column; gap: 12px;
+      border: 1px solid var(--border);
+      background: transparent;
+      transition: background 0.2s ease, transform 0.2s ease;
+      padding: 16px;
+    }
+    .card .title { font-weight: 700; font-size: var(--fs-500); }
+    .card .meta { font-size: var(--fs-300); color: #475569; }
+    .card .desc { font-size: var(--fs-400); color: #334155; }
+    .card.minimal-flat:hover { background: var(--flat-hover); }
+
+    .card.rounded-soft {
+      border-radius: 12px;
+      box-shadow: var(--soft-shadow);
+      background: #fff;
+    }
+    .card.rounded-soft:hover { transform: scale(1.02); }
+
+    /* 카드 내 썸네일 (WebP 우선, picture로 대체 제공) */
+    .thumb { border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+
+    /* ===============================
+       5) 섹션 공통
+    =============================== */
+    section { padding: 40px 0; }
+    .section-title {
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: var(--fs-600);
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      color: #334155;
+      margin-bottom: 24px;
+    }
+
+    /* ===============================
+       6) “이커머스 레이아웃” → 프로젝트 그리드로 활용
+          - 2~6 컬럼 반응형
+          - 좌측 사이드(소개/필터 컨셉) + 리스트
+    =============================== */
+    .grid-wrap {
+      display: grid;
+      grid-template-columns: 1fr; /* 모바일: 단일 컬럼 */
+      gap: 24px;
+    }
+    .sidebar {
+      border: 1px solid var(--border);
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: var(--soft-shadow);
+      background: #fff;
+    }
+    .sidebar h3 { margin-top: 0; font-size: var(--fs-500); }
+    .filters .chip {
+      display: inline-block;
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 9999px;
+      margin: 6px 6px 0 0;
+      font-size: var(--fs-300);
+      transition: background 0.2s ease;
+    }
+    .filters .chip:hover { background: var(--flat-hover); }
+
+   /* 기존 product-grid 코드 수정 */
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* 모바일 기본 1컬럼 */
+  gap: 20px;
+}
+
+/* 화면 크기에 따른 반응형 조정 */
+@media (min-width: 576px) {
+  .product-grid { grid-template-columns: repeat(2, 1fr); } /* sm: 2컬럼 */
+}
+@media (min-width: 992px) {
+  .product-grid { grid-template-columns: repeat(3, 1fr); } /* lg: 3컬럼 */
+}
+@media (min-width: 1200px) {
+  .product-grid { grid-template-columns: repeat(3, 1fr); } /* xl도 3컬럼 유지 */
+}
+
+    /* ===============================
+       7) 버튼 (Minimal Flat / Rounded Soft 변형)
+    =============================== */
+    .btn {
+      display: inline-block;
+      padding: 10px 14px;
+      font-size: var(--fs-400);
+      border: 1px solid var(--border);
+      background: transparent;
+      border-radius: 10px;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .btn:hover { background: var(--flat-hover); }
+    .btn.soft {
+      border-radius: 12px;
+      box-shadow: var(--soft-shadow);
+      background: #fff;
+    }
+    .btn.soft:hover { transform: translateY(-2px); }
+
+    /* ===============================
+       8) 플로팅 액션 버튼 (장바구니 → 연락하기)
+    =============================== */
+    .fab {
+      position: fixed; right: 16px; bottom: 20px; z-index: 60;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 9999px;
+      padding: 10px 16px;
+      box-shadow: var(--soft-shadow);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .fab:hover { background: var(--flat-hover); transform: translateY(-3px); }
+
+    /* ===============================
+       9) 푸터
+    =============================== */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0 48px;
+      color: #475569;
+      font-size: var(--fs-300);
+    }
+
+    /* ===============================
+       10) 접근성: 모션 최소화 고려
+    =============================== */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* 시각적 숨김 텍스트 (스크린리더용) */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- 상단 네비게이션 (검색 고정 개념: 데스크톱에서 상단 바) -->
+  <header>
+    <div class="container nav">
+      <div class="brand">신민석</div>
+
+      <!-- 햄버거 (모바일) -->
+      <label class="burger" for="nav-toggle" aria-label="메뉴 열기">
+        <span aria-hidden="true">☰</span><span>Menu</span>
+      </label>
+      <input type="checkbox" id="nav-toggle" />
+
+      <!-- 메뉴: CSS Smooth Slide -->
+      <nav class="menu" aria-label="주요 메뉴">
+        <a href="#about">소개</a>
+        <a href="#skills">역량</a>
+        <a href="#works">프로젝트</a>
+        <a href="#contact">연락처</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- 히어로 -->
+    <section class="hero">
+      <div class="container">
+        <p class="eyebrow">자기소개서 · 모바일 우선 · Classic Serif</p>
+        <h1>한눈에 읽히는<br/>깔끔하고 심플한 자기소개</h1>
+        <p class="lead">
+          불필요한 요소를 덜어내고, 누구나 편안하게 읽을 수 있는 디자인을 지향했습니다.
+부드럽고 단정한 레이아웃 속에 제 생각과 철학을 담아내고자 했습니다.
+기술보다 사람이 먼저라는 마음으로, 단순하지만 오래 기억되는 화면을 만들었습니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- 소개 -->
+    <section id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="card minimal-flat">
+              <div class="title">프로필</div>
+              <div class="meta">신민석 · AISW 계열 · ISFP / ISTP</div>
+              <div class="desc">
+                문제를 구조화하고, 사용자 경험을 단순화하는 것을 좋아합니다.
+                불필요한 장식을 줄이고 핵심 정보가 먼저 보이도록 설계합니다.
+                <br/>관심 분야: 프론트엔드 학습, 마크다운 포트폴리오 정리, C언어 알고리즘 연습
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="card rounded-soft">
+              <picture class="thumb">
+  <source srcset="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1200&auto=format&fit=crop&q=60&fm=webp" type="image/webp" />
+  <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1200&auto=format&fit=crop&q=60" alt="미니멀한 데스크 — 집중된 작업 환경" />
+</picture>
+
+              <div class="title">작업 철학</div>
+              <div class="desc">
+                정보 구조(IA)와 타이포그래피의 힘을 믿습니다. CSS만으로도 충분히 깨끗하고 빠른 인터페이스를 만들 수 있다고 생각합니다.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 역량(필터 개념을 사이드 정보로 차용) + 프로젝트 그리드(이커머스 → 카드 리스트) -->
+    <section id="works" aria-labelledby="works-title">
+      <div class="container">
+        <h2 id="works-title" class="section-title">프로젝트 & 학습 기록</h2>
+        <p class="section-desc">
+          “프로젝트 카드에는 제가 진행한 학습과 시도를 담았습니다.
+아래에는 관심 키워드와 간단한 소개를 함께 배치해, 제 생각의 흐름을 자연스럽게 이어가고자 했습니다."
+        </p>
+
+        <div class="grid-wrap">
+          <!-- 좌측 사이드바 (필터 컨셉) -->
+          <aside class="sidebar" aria-label="프로젝트 분류">
+            <h3>관심 키워드</h3>
+            <div class="filters">
+              <span class="chip">#C언어</span>
+              <span class="chip">#정렬알고리즘</span>
+              <span class="chip">#포트폴리오</span>
+              <span class="chip">#Jekyll</span>
+              <span class="chip">#Markdown</span>
+              <span class="chip">#반응형</span>
+              <span class="chip">#접근성</span>
+            </div>
+            <hr style="border:none;border-top:1px solid var(--border); margin:16px 0;">
+            <p style="font-size: var(--fs-300); color:#475569;">
+              * 데모 페이지는 설명용으로 구성되었으며, 모든 인터랙션은 CSS만 사용합니다.
+            </p>
+          </aside>
+
+          <!-- 그리드(2~6컬럼) -->
+          <div class="product-grid" role="list">
+            <!-- 카드 1 -->
+            <article class="card minimal-flat" role="listitem">
+              <picture class="thumb" aria-hidden="true">
+                <source srcset="https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=800&auto=format&fit=crop&q=60&fm=webp" type="image/webp" />
+                <img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=800&auto=format&fit=crop&q=60" alt="" />
+              </picture>
+              <div class="title">C언어 정렬 알고리즘 정리</div>
+              <div class="meta">버블정렬 · qsort · 시간복잡도 메모</div>
+              <p class="desc">학습한 코드를 정리하고, 입력/출력 예시와 실행 결과를 문서화했습니다.</p>
+              <a class="btn" href="#" aria-label="C언어 정렬 알고리즘 정리 자세히 보기">자세히 보기</a>
+            </article>
+
+            <!-- 카드 2 -->
+            <article class="card rounded-soft" role="listitem">
+              <picture class="thumb" aria-hidden="true">
+                <source srcset="https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?w=800&auto=format&fit=crop&q=60&fm=webp" type="image/webp" />
+                <img src="https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?w=800&auto=format&fit=crop&q=60" alt="" />
+              </picture>
+              <div class="title">포트폴리오 웹사이트 커스터마이징</div>
+              <div class="meta">Jekyll · 12컬럼 그리드 · 커스텀 SCSS</div>
+              <p class="desc">샘플 테마를 개인 정보로 수정하고, 반응형 레이아웃과 글 가독성을 개선했습니다.</p>
+              <a class="btn soft" href="#" aria-label="포트폴리오 웹사이트 커스터마이징 자세히 보기">프로젝트 보기</a>
+            </article>
+
+            <!-- 카드 3 -->
+            <article class="card minimal-flat" role="listitem">
+              <picture class="thumb" aria-hidden="true">
+                <source srcset="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=60&fm=webp" type="image/webp" />
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=60" alt="" />
+              </picture>
+              <div class="title">Markdown 중심 학습 레포</div>
+              <div class="meta">문서화 · 코드 스니펫 · 예제 중심</div>
+              <p class="desc">학습 과정을 기록하며, 재활용 가능한 예시·템플릿을 함께 정리했습니다.</p>
+              <a class="btn" href="#" aria-label="Markdown 중심 학습 레포 자세히 보기">레포 이동</a>
+            </article>
+
+            <!-- 카드 4 -->
+            <article class="card rounded-soft" role="listitem">
+              <picture class="thumb" aria-hidden="true">
+                <source srcset="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?w=800&auto=format&fit=crop&q=60&fm=webp" type="image/webp" />
+                <img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?w=800&auto=format&fit=crop&q=60" alt="" />
+              </picture>
+              <div class="title">UI 마크다운 시스템 실험</div>
+              <div class="meta">Minimal Flat · Rounded Soft · Slide</div>
+              <p class="desc">디자인 토큰을 명시하고, HTML/CSS만으로 인터랙션을 구성해 보았습니다.</p>
+              <a class="btn soft" href="#" aria-label="UI 마크다운 시스템 실험 자세히 보기">데모 보기</a>
+            </article>
+
+            <!-- 카드 5 -->
+            <article class="card minimal-flat" role="listitem">
+              <picture class="thumb" aria-hidden="true">
+                <source srcset="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&auto=format&fit=crop&q=60&fm=webp" type="image/webp" />
+                <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&auto=format&fit=crop&q=60" alt="" />
+              </picture>
+              <div class="title">접근성 고려 반응형</div>
+              <div class="meta">prefers-reduced-motion · 시멘틱</div>
+              <p class="desc">모션 민감 사용자를 배려하고, 스크린리더 친화적 구조를 지켰습니다.</p>
+              <a class="btn" href="#" aria-label="접근성 고려 반응형 자세히 보기">가이드</a>
+            </article>
+
+            <!-- 카드 6 -->
+            <article class="card rounded-soft" role="listitem">
+              <picture class="thumb" aria-hidden="true">
+                <source srcset="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=800&auto=format&fit=crop&q=60&fm=webp" type="image/webp" />
+                <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=800&auto=format&fit=crop&q=60" alt="" />
+              </picture>
+              <div class="title">문서·코드 일관성</div>
+              <div class="meta">Typography · Spacing · IA</div>
+              <p class="desc">라인 길이·행간·여백을 정리하여, 읽기 흐름이 끊기지 않도록 구성했습니다.</p>
+              <a class="btn soft" href="#" aria-label="문서·코드 일관성 자세히 보기">노트</a>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 스킬 -->
+    <section id="skills" aria-labelledby="skills-title">
+  <div class="container">
+    <h2 id="skills-title" class="section-title">핵심 역량</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card minimal-flat">
+          <div class="title">구조를 읽는 시선</div>
+          <p class="desc">
+            정보를 단순히 나열하지 않고, 흐름과 관계를 파악하며 구조적으로 정리합니다.  
+            사용자가 한눈에 이해할 수 있는 질서를 만드는 것이 제 강점입니다.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card rounded-soft">
+          <div class="title">섬세한 시각 표현</div>
+          <p class="desc">
+            작은 여백, 글자 간격, 색감의 균형처럼 눈에 잘 띄지 않는 부분까지 세심하게 다듬습니다.  
+            미묘한 차이가 전체 인상을 바꾼다고 믿습니다.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card rounded-soft">
+          <div class="title">꾸준한 학습과 성장</div>
+          <p class="desc">
+            새로운 기술이나 도구를 배우는 것을 즐깁니다.  
+            완벽보다 꾸준함이 중요하다는 마음으로, 매일 조금씩 나아가고 있습니다.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card minimal-flat">
+          <div class="title">협업과 커뮤니케이션</div>
+          <p class="desc">
+            혼자보다 함께 성장하는 과정이 더 큰 의미를 만든다고 생각합니다.  
+            의견을 경청하고, 명확하게 표현하며, 서로의 강점을 이어가는 협업을 지향합니다.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- 연락처 -->
+    <section id="contact" aria-labelledby="contact-title">
+      <div class="container">
+        <h2 id="contact-title" class="section-title">연락처</h2>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card minimal-flat">
+              <div class="title">함께 이야기해요</div>
+              <p class="desc">
+                이메일: <a href="mailto:smseok0104@gmail.com">smseok0104@gmail.com</a><br/>
+                GitHub: <a href="#" rel="noopener">hamsdgfh</a>
+              </p>
+              <a class="btn" href="mailto:smseok0104@gmail.com">메일 보내기</a>
+              <a class="btn soft" href="#" download>이력서 다운로드</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 플로팅 액션 버튼 (연락하기) -->
+  <a class="fab" href="mailto:smseok0104@gmail.com" aria-label="이메일 보내기">✉️ 연락하기</a>
+
+  <footer>
+    <div class="container">
+      <div>© 2025 신민석 · HTML & CSS Only · Mobile First · Serif UI</div>
+    </div>
+  </footer>
+</body>
+</html>
